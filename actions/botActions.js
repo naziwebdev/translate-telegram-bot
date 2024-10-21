@@ -1,3 +1,5 @@
+const redis = require("../redis");
+
 const homeMenue = (bot, chatId) => {
   const inlineKeyboard = {
     reply_markup: {
@@ -13,4 +15,22 @@ const homeMenue = (bot, chatId) => {
   bot.sendMessage(chatId, "choice the engine of translate : ", inlineKeyboard);
 };
 
-module.exports = { homeMenue };
+const choiceDestLang = async (
+  bot,
+  chatId,
+  field,
+  command,
+  keyboard,
+  message,
+  messageId
+) => {
+  await redis.set(`user:${chatId}:${field}`, command , "EX" , 60*5);
+
+  bot.editMessageText(message, {
+    chat_id:chatId,
+    message_id:messageId,
+    reply_markup:keyboard.reply_markup
+  })
+};
+
+module.exports = { homeMenue, choiceDestLang };

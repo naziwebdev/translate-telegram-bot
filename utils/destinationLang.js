@@ -7,7 +7,7 @@ const destinationLang = {
       ],
       [
         { text: "franch", callback_data: "fr" },
-        { text: "spanish", callback_data: "es" },
+        { text: "spanish", callback_data: "es" }
       ],
     ],
   },

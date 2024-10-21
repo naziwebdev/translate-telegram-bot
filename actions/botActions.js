@@ -24,13 +24,18 @@ const choiceDestLang = async (
   message,
   messageId
 ) => {
-  await redis.set(`user:${chatId}:${field}`, command , "EX" , 60*5);
+  await redis.set(`user:${chatId}:${field}`, command, "EX", 60 * 5);
 
   bot.editMessageText(message, {
-    chat_id:chatId,
-    message_id:messageId,
-    reply_markup:keyboard.reply_markup
-  })
+    chat_id: chatId,
+    message_id: messageId,
+    reply_markup: keyboard.reply_markup,
+  });
 };
 
-module.exports = { homeMenue, choiceDestLang };
+const getUserLang = async (bot, chatId, field, lang, message) => {
+  await redis.set(`user:${chatId}:${field}`, lang, "EX", 60 * 5);
+  bot.sendMessage(chatId, message);
+};
+
+module.exports = { homeMenue, choiceDestLang, getUserLang };

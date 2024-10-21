@@ -3,6 +3,7 @@ const configs = require("./configs");
 const { homeMenue } = require("./actions/botActions");
 const { destinationLang } = require("./utils/destinationLang");
 const { choiceDestLang } = require("./actions/botActions");
+const { getUserLang } = require("./actions/botActions");
 
 const token = configs.telegramToken;
 const bot = new TelegramBot(token, { polling: true });
@@ -31,6 +32,15 @@ bot.on("callback_query", async (query) => {
       keyboard,
       "choice destination lang :",
       messageId
+    );
+
+  if (langs.includes(command))
+    await getUserLang(
+      bot,
+      chatId,
+      "lang",
+      command,
+      "متن مورد نظر را ارسال کنید :"
     );
 });
 
